@@ -1,18 +1,25 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "./Header";
+import MainContainer from "./MainContainer";
+import UseMovieFetch from "../Hooks/UseMovieFetch";
+import { addNowPlayingMovies } from "../Utils/movieSlice";
 
 const Browse = () => {
-  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const nowPlayingMovie = UseMovieFetch(
+    "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1"
+  );
+
+  dispatch(addNowPlayingMovies(nowPlayingMovie.results));
+
   return (
     <div className="absolute">
       <Header />
-      <div>
-        <div className=" mt-[40%] ms-5 text-3xl">
-          Hello <strong>{user.displayName}</strong>, Please sent Rs 500 to Mr
-          Sasidhar, then only content will be added soon.
-        </div>
-      </div>
+      <>
+        <MainContainer />
+      </>
     </div>
   );
 };

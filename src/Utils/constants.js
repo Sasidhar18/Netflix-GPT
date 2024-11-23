@@ -9,3 +9,12 @@ export const emailRegex =
 
 export const avatar =
   "https://www.google.com/url?sa=i&url=https%3A%2F%2Fca.pinterest.com%2Fpin%2Fnetflix-2018-superhero-profile-ion-by-norbertsloth--59883870038040162%2F&psig=AOvVaw1jEEzw7ny-b7LxWSNSZQCQ&ust=1731864967851000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNDw8Yyy4YkDFQAAAAAdAAAAABAE";
+
+export const API_OPTIONS = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzOGZjNjQxODIxMDM4ZWI5MzEyMDY0NWUwYTJlMTdlZiIsIm5iZiI6MTczMjM0MzYxMC4wNTkxNDI2LCJzdWIiOiI2NzQxNzYwYjYzNzBlY2FkM2ZmZmM2NjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.SQSBOOFileFGkV-y7H8HCGUN5yPWh6HSDxWrNvBjh3o",
+  },
+};

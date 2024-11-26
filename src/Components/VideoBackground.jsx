@@ -12,11 +12,11 @@ const VideoBackground = ({ movieID }) => {
   const filterData = movieData?.results?.filter(
     (video) => video.type === "Trailer"
   );
-  const trailer = filterData?.length ? filterData?.[0] : movieData?.results?.[0];
+  const trailer = filterData?.length
+    ? filterData?.[0]
+    : movieData?.results?.[0];
 
   dispatch(addTrailerVideo(trailer));
-
-  console.log(trailerVideo);
 
   return (
     <div className=" w-screen">

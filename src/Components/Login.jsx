@@ -10,7 +10,6 @@ import { auth } from "../Utils/firebase";
 import Validation from "../Utils/Validation";
 import { useDispatch } from "react-redux";
 import { addUser } from "../Utils/userSlice";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);

@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "./Header";
 import MainContainer from "./MainContainer";
 import UseMovieFetch from "../Hooks/UseMovieFetch";
-import { addNowPlayingMovies } from "../Utils/movieSlice";
+import { addNowPlayingMovies, addPopularMovies } from "../Utils/movieSlice";
+import SecondaryContainer from "./SecondaryContainer";
+import GptSearch from "./GptSearch";
 
 const Browse = () => {
   const dispatch = useDispatch();
@@ -12,14 +14,19 @@ const Browse = () => {
     "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1"
   );
 
+  const popularMovies = UseMovieFetch(
+    "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1"
+  );
+
+  dispatch(addPopularMovies(popularMovies.results));
+
   dispatch(addNowPlayingMovies(nowPlayingMovie.results));
 
   return (
-    <div className="absolute">
+    <div className="">
       <Header />
-      <>
-        <MainContainer />
-      </>
+      <MainContainer />
+      <SecondaryContainer />
     </div>
   );
 };

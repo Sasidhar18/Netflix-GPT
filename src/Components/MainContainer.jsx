@@ -10,7 +10,6 @@ const MainContainer = () => {
   const nowPlayingMovie = useSelector(
     (state) => state.movie.nowPlayingMovies
   )?.[movieNumber];
-  console.log(nowPlayingMovie);
 
   if (!nowPlayingMovie) return;
 

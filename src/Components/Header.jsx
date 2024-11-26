@@ -6,9 +6,11 @@ import { auth } from "../Utils/firebase";
 import { addUser, removeUser } from "../Utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
+import { toggleGPT } from "../Utils/gptSlice";
 
 const Header = () => {
   const user = useSelector((state) => state.user);
+  const showGptSearch = useSelector((state) => state.gpt.gptShow);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,6 +37,10 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
 
+  const handleGptToggle = () => {
+    dispatch(toggleGPT());
+  };
+
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {})
@@ -47,6 +53,12 @@ const Header = () => {
       <img className="w-44 mx-auto md:mx-0" src={LOGO} alt="logo" />
       {user && (
         <div>
+          <button
+            className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg"
+            onClick={handleGptToggle}
+          >
+            {showGptSearch ? "Homepage" : "GPT Search"}
+          </button>
           <img
             className="hidden md:block w-12 h-12"
             alt="usericon"

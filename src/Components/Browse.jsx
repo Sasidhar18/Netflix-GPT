@@ -5,7 +5,6 @@ import MainContainer from "./MainContainer";
 import UseMovieFetch from "../Hooks/UseMovieFetch";
 import { addNowPlayingMovies, addPopularMovies } from "../Utils/movieSlice";
 import SecondaryContainer from "./SecondaryContainer";
-import GptSearch from "./GptSearch";
 
 const Browse = () => {
   const dispatch = useDispatch();

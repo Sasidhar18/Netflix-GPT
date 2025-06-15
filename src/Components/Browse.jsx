@@ -5,9 +5,11 @@ import MainContainer from "./MainContainer";
 import UseMovieFetch from "../Hooks/UseMovieFetch";
 import { addNowPlayingMovies, addPopularMovies } from "../Utils/movieSlice";
 import SecondaryContainer from "./SecondaryContainer";
+import GptSearch from "./GptSearch";
 
 const Browse = () => {
   const dispatch = useDispatch();
+  const showGptSearch = useSelector((state) => state.gpt.gptShow);
 
   const nowPlayingMovie = UseMovieFetch(
     "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1"
@@ -24,8 +26,15 @@ const Browse = () => {
   return (
     <div className="">
       <Header />
-      <MainContainer />
-      <SecondaryContainer />
+
+      {showGptSearch ? (
+        <GptSearch />
+      ) : (
+        <>
+          <MainContainer />
+          <SecondaryContainer />
+        </>
+      )}
     </div>
   );
 };

@@ -20,3 +20,5 @@ export const API_OPTIONS = {
 };
 
 export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500";
+
+export const geminiKey = "AIzaSyB_IGHj84xXMB6cm5cG73Q9UW24GPgG0Z8"

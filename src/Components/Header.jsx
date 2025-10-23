@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { LOGO } from "../Utils/constants";
 import { useSelector, useDispatch } from "react-redux";
-import { signOut } from "firebase/auth";
+import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../Utils/firebase";
 import { addUser, removeUser } from "../Utils/userSlice";
 import { useNavigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
 import { toggleGPT } from "../Utils/gptSlice";
 
 const Header = () => {
@@ -19,12 +18,7 @@ const Header = () => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
         dispatch(
-          addUser({
-            uid: uid,
-            email: email,
-            displayName: displayName,
-            photoURL: photoURL,
-          })
+          addUser({ uid, email, displayName, photoURL })
         );
         navigate("/browse");
       } else {
@@ -33,38 +27,31 @@ const Header = () => {
       }
     });
 
-    // Unsiubscribe when component unmounts
     return () => unsubscribe();
-  }, []);
+  }, [dispatch, navigate]);
 
   const handleGptToggle = () => {
     dispatch(toggleGPT());
   };
 
   const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {})
-      .catch((error) => {
-        console.log(error.message);
-      });
+    signOut(auth).catch((error) => console.log(error.message));
   };
+
   return (
-    <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between">
-      <img className="w-44 mx-auto md:mx-0" src={LOGO} alt="logo" />
+    <div className="header">
+      <img className="logo" src={LOGO} alt="logo" />
       {user && (
-        <div>
-          <button
-            className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg"
-            onClick={handleGptToggle}
-          >
+        <div className="user-section">
+          {/* <button className="gpt-btn" onClick={handleGptToggle}>
             {showGptSearch ? "Homepage" : "GPT Search"}
-          </button>
+          </button> */}
           <img
-            className="hidden md:block w-12 h-12"
+            className="user-icon"
             alt="usericon"
             src="https://loodibee.com/wp-content/uploads/Netflix-avatar-7.png"
           />
-          <button onClick={handleSignOut} className="font-bold text-white ">
+          <button onClick={handleSignOut} className="signout-btn">
             (Sign Out)
           </button>
         </div>

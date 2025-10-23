@@ -19,9 +19,7 @@ const Login = () => {
   const email = useRef();
   const password = useRef();
 
-  const toggleSignInForm = () => {
-    setIsSignInForm((prevState) => !prevState);
-  };
+  const toggleSignInForm = () => setIsSignInForm((prev) => !prev);
 
   const handleSignIn = () => {
     const formError = Validation(email.current.value, password.current.value);
@@ -30,20 +28,9 @@ const Login = () => {
       return;
     }
 
-    setErrorMesssage("");
-    signInWithEmailAndPassword(
-      auth,
-      email.current.value,
-      password.current.value
-    )
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-      })
+    signInWithEmailAndPassword(auth, email.current.value, password.current.value)
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setErrorMesssage(errorCode + "-" + errorMessage);
+        setErrorMesssage(error.code + " - " + error.message);
       });
   };
 
@@ -59,12 +46,7 @@ const Login = () => {
       return;
     }
 
-    setErrorMesssage("");
-    createUserWithEmailAndPassword(
-      auth,
-      email.current.value,
-      password.current.value
-    )
+    createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
       .then((userCredential) => {
         const user = userCredential.user;
         updateProfile(user, {
@@ -73,68 +55,38 @@ const Login = () => {
         })
           .then(() => {
             const { uid, email, displayName, photoURL } = auth.currentUser;
-            dispatch(
-              addUser({
-                uid,
-                email,
-                displayName,
-                photoURL,
-              })
-            );
+            dispatch(addUser({ uid, email, displayName, photoURL }));
           })
-          .catch((error) => {
-            setErrorMesssage(error.message);
-          });
+          .catch((error) => setErrorMesssage(error.message));
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setErrorMesssage(errorCode + "-" + errorMessage);
-      });
+      .catch((error) => setErrorMesssage(error.code + " - " + error.message));
   };
 
   return (
     <div>
       <Header />
-      <div className="absolute">
-        <img className="object-cover min-h-[100vh]" src={BG_URL} alt="logo" />
+      <div className="background">
+        <img className="bg-image" src={BG_URL} alt="background" />
       </div>
-      <form
-        onSubmit={(e) => e.preventDefault()}
-        className="w-[70%] md:w-[50%] absolute p-12 bg-black my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-80"
-      >
-        <h1 className="font-bold text-3xl py-4">
-          {isSignInForm ? "Sign In" : "Sign Up"}
-        </h1>
+      <form onSubmit={(e) => e.preventDefault()} className="login-form">
+        <h1 className="form-title">{isSignInForm ? "Sign In" : "Sign Up"}</h1>
 
         {!isSignInForm && (
-          <input
-            ref={name}
-            type="text"
-            placeholder="Full Name"
-            className="p-4 my-4 w-full bg-gray-700"
-          />
+          <input ref={name} type="text" placeholder="Full Name" className="input-field" />
         )}
-        <input
-          ref={email}
-          type="text"
-          placeholder="Email Address"
-          className="p-4 my-4 w-full bg-gray-700"
-        />
-        <input
-          ref={password}
-          type="password"
-          placeholder="Password"
-          className="p-4 my-4 w-full bg-gray-700"
-        />
-        <p className="text-red-500 font-bold text-lg py-2">{errorMessage}</p>
+        <input ref={email} type="text" placeholder="Email Address" className="input-field" />
+        <input ref={password} type="password" placeholder="Password" className="input-field" />
+
+        <p className="error-msg">{errorMessage}</p>
+
         <button
           onClick={isSignInForm ? handleSignIn : handleSignUp}
-          className="p-4 my-6 bg-red-700 w-full rounded-lg"
+          className="submit-btn"
         >
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
-        <p className="py-4 cursor-pointer" onClick={toggleSignInForm}>
+
+        <p className="toggle-text" onClick={toggleSignInForm}>
           {isSignInForm
             ? "New to Netflix? Sign Up Now"
             : "Already registered? Sign In Now."}

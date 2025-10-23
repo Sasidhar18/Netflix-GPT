@@ -19,9 +19,8 @@ const VideoBackground = ({ movieID }) => {
   dispatch(addTrailerVideo(trailer));
 
   return (
-    <div className=" w-screen">
+    <div className="video-container">
       <iframe
-        className="w-screen aspect-video"
         src={
           "https://www.youtube.com/embed/" +
           trailerVideo?.key +
